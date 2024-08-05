@@ -134,9 +134,10 @@ alias podu=“pod install --no-repo-update”
 alias nv="neovide --frame transparent"
 alias j=jump
 alias fp="fzf --preview='bat {}'"
+alias efp='nvim $(fp)'
 alias dexec=/usr/local/bin/dexec.sh
 alias cd='z'
-alias g='cd "./$(find -type d | fzf)"'
+alias g='cd $(find . -type d -print | fzf)'
 
 # Set-up icons for files/folders in terminal
 alias ls='eza -a --icons'
