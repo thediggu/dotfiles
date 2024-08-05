@@ -1,12 +1,18 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+ZSH_THEME="xiong-chiamiov-plus"
+
+# Display Pokemon-colorscripts
+# Project page: https://gitlab.com/phoneybadger/pokemon-colorscripts#on-other-distros-and-macos
+pokemon-colorscripts --no-title -s -r
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -17,7 +23,7 @@ export LANG="en_US@UTF-8"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 
 # Set list of themes to pick from when loading at random
@@ -80,7 +86,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git jump zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete)
+plugins=(
+  git
+  jump
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -114,22 +125,29 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# zoxide
+eval "$(zoxide init zsh)"
+
 # APPLICATIONS
 alias podi=“pod install”
 alias podu=“pod install --no-repo-update”
 alias nv="neovide --frame transparent"
-
-# CUSTOM COMMANDS
-alias lla=la -alih
 alias j=jump
-alias fzfp="fzf --preview='bat {}'"
+alias fp="fzf --preview='bat {}'"
+alias dexec=/usr/local/bin/dexec.sh
+alias cd='z'
+alias g='cd "./$(find -type d | fzf)"'
+
+# Set-up icons for files/folders in terminal
+alias ls='eza -a --icons'
+alias ll='eza -al --icons'
+alias lt='eza -a --tree --level=1 --icons'
+
 
 # CUSTOM SCRIPTS
-export PATH=$PATH:/Users/digvijaymahapatra/.spicetify
-alias dexec=/usr/local/bin/dexec.sh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 if type brew &>/dev/null
 then
@@ -149,7 +167,10 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ZSH Config
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#663399,standout"
-ZSH_THEME="spaceship"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#144FAA,standout"
 source <(fzf --zsh)
 EDITOR='nvim'
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
